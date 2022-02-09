@@ -1,0 +1,21 @@
+# Directories
+build/
+target/
+
+# Compiled class file
+*.class
+
+# Log file
+*.log
+ 
+# Package Files
+*.jar
+*.war
+*.ear
+
+# IntelliJ IDEA
+.idea
+.idea/
+*.iml
+*.ipr
+*.iws
