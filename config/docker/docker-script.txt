@@ -1,0 +1,4 @@
+docker pull postgres:12.9
+docker run --name management-container -e POSTGRES_PASSWORD=postgres -e POSTGRES_USER=postgres -e POSTGRES_DB=management-db -d -p 5432:5432 -v postgres-volume:/var/lib/postgresql/data postgres:12.9
+
+docker-compose -f docker-compose.yml up -d
