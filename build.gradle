@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '2.6.3'
     id "io.spring.dependency-management" version "1.0.11.RELEASE"
+    id 'checkstyle'
 }
 
 group 'by.milosh'
@@ -13,6 +14,15 @@ repositories {
     mavenCentral()
 }
 
+ext {
+    checkstyleToolVersion = '8.41'
+}
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
+}
+
+checkstyle {
+    toolVersion "$checkstyleToolVersion"
+    configFile rootProject.file('config/checkstyle.xml')
 }
