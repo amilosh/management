@@ -16,18 +16,20 @@ repositories {
 
 ext {
     checkstyleToolVersion = "8.41"
-    mapStructVersion = "1.4.2.Final"
+    mapStructVersion = "1.3.1.Final"
     springfoxSwaggerVersion = "3.0.0"
+    lombokVersion = "1.18.12"
 }
 
 dependencies {
     implementation "org.springframework.boot:spring-boot-starter-web"
     implementation "org.springframework.boot:spring-boot-starter-data-jpa"
     runtimeOnly "org.postgresql:postgresql"
-    implementation "org.mapstruct:mapstruct-processor:$mapStructVersion"
     implementation "org.mapstruct:mapstruct:$mapStructVersion"
     annotationProcessor "org.mapstruct:mapstruct-processor:$mapStructVersion"
     implementation "io.springfox:springfox-boot-starter:$springfoxSwaggerVersion"
+    compileOnly "org.projectlombok:lombok:$lombokVersion"
+    annotationProcessor "org.projectlombok:lombok:$lombokVersion"
 }
 
 checkstyle {
