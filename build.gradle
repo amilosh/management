@@ -20,6 +20,7 @@ ext {
     springfoxSwaggerVersion = "3.0.0"
     lombokVersion = "1.18.22"
     lombokMapstructBindingVersion = "0.2.0"
+    flywayVersion = "8.4.4"
 }
 
 dependencies {
@@ -32,6 +33,7 @@ dependencies {
     implementation "org.projectlombok:lombok-mapstruct-binding:$lombokMapstructBindingVersion"
     implementation "org.mapstruct:mapstruct:$mapStructVersion"
     annotationProcessor "org.mapstruct:mapstruct-processor:$mapStructVersion"
+    implementation "org.flywaydb:flyway-core:$flywayVersion"
 }
 
 checkstyle {

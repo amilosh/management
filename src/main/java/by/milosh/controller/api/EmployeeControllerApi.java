@@ -5,7 +5,6 @@ import by.milosh.entity.EmployeeDto;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
-import org.springframework.web.bind.annotation.RequestBody;
 
 public interface EmployeeControllerApi {
 
