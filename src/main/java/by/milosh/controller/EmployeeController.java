@@ -1,5 +1,6 @@
 package by.milosh.controller;
 
+import by.milosh.controller.api.EmployeeControllerApi;
 import by.milosh.entity.Employee;
 import by.milosh.entity.EmployeeCreateDto;
 import by.milosh.entity.EmployeeDto;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping(value = "/employee")
-public class EmployeeController {
+public class EmployeeController implements EmployeeControllerApi {
 
     private final EmployeeService employeeService;
     private final EmployeeMapper employeeMapper;
