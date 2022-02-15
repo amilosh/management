@@ -1,6 +1,7 @@
 plugins {
     id "org.springframework.boot" version "2.5.9" apply false
     id "io.spring.dependency-management" version "1.0.11.RELEASE" apply false
+    id 'org.unbroken-dome.test-sets' version '4.0.0' apply false
 }
 
 allprojects {
@@ -14,6 +15,7 @@ allprojects {
         lombokVersion = "1.18.22"
         lombokMapstructBindingVersion = "0.2.0"
         flywayVersion = "8.4.4"
+        pgEmbeddedVersion = "0.13.4"
     }
 
     configure(subprojects) {
@@ -36,7 +38,9 @@ allprojects {
         dependencies {
             implementation "io.springfox:springfox-boot-starter:$springfoxSwaggerVersion"
             compileOnly "org.projectlombok:lombok:$lombokVersion"
+            testCompileOnly "org.projectlombok:lombok:$lombokVersion"
             annotationProcessor "org.projectlombok:lombok:$lombokVersion"
+            testAnnotationProcessor "org.projectlombok:lombok:$lombokVersion"
             implementation "org.projectlombok:lombok-mapstruct-binding:$lombokMapstructBindingVersion"
             implementation "org.mapstruct:mapstruct:$mapStructVersion"
             annotationProcessor "org.mapstruct:mapstruct-processor:$mapStructVersion"
@@ -45,6 +49,10 @@ allprojects {
         checkstyle {
             toolVersion "$checkstyleToolVersion"
             configFile rootProject.file("config/checkstyle.xml")
+        }
+
+        test {
+            useJUnitPlatform()
         }
     }
 }

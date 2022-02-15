@@ -4,10 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication(scanBasePackages = "by.milosh")
-public class ManagementApplication {
-    public static final String PROFILE_TEST = "test";
+public class ManagementApplicationTest {
 
     public static void main(String[] args) {
-        SpringApplication.run(ManagementApplication.class, args);
+        SpringApplication.run(ManagementApplicationTest.class, args);
     }
 }
