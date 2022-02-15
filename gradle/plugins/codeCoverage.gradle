@@ -1,0 +1,63 @@
+apply plugin: 'jacoco'
+
+class CodeCoveragePlugin implements Plugin<Project> {
+
+    void apply(Project project) {
+        def execFiles = project.fileTree(project.buildDir).include("/jacoco/*.exec")
+
+        def vts = 'by/milosh'
+        def excludedTests = [
+                vts + '/ManagementApplication.class',
+                vts + '/facade/**',
+                vts + '/repository/impl/**',
+                vts + '/repository/*.class',
+                vts + '/config/**',
+                vts + '/controller/**',
+                vts + '/security/**'
+        ]
+
+        project.jacocoTestReport {
+            executionData(execFiles)
+            reports { xml.enabled = true }
+            project.afterEvaluate {
+                getClassDirectories().setFrom(classDirectories.files.collect {
+                    project.fileTree(it).exclude(
+                            excludedTests
+                    )
+                })
+            }
+        }
+
+        project.jacocoTestCoverageVerification {
+            executionData(execFiles)
+            project.afterEvaluate {
+                getClassDirectories().setFrom(classDirectories.files.collect {
+                    project.fileTree(it).exclude(
+                            excludedTests
+                    )
+                })
+            }
+            violationRules { rule { limit {
+                counter = 'LINE'
+                minimum = 0.50
+            } } }
+        }
+
+        configureDependsOn(project, 'check', 'jacocoTestCoverageVerification')
+        configureDependsOn(project, 'jacocoTestCoverageVerification', 'jacocoTestReport')
+    }
+
+    private static configureDependsOn(Project project, String dependentTaskName, String sourceTaskName) {
+        def dependentTask = getTask(project, dependentTaskName)
+        def sourceTask = getTask(project, sourceTaskName)
+        dependentTask.dependsOn sourceTask
+    }
+
+    private static getTask(Project project, String name) {
+        return project
+                .tasks
+                .matching { it.name == name } [0]
+    }
+}
+
+apply plugin: CodeCoveragePlugin

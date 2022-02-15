@@ -2,6 +2,7 @@ plugins {
     id "org.springframework.boot" version "2.5.9" apply false
     id "io.spring.dependency-management" version "1.0.11.RELEASE" apply false
     id 'org.unbroken-dome.test-sets' version '4.0.0' apply false
+    id 'jacoco'
 }
 
 allprojects {
@@ -21,6 +22,7 @@ allprojects {
     configure(subprojects) {
         apply plugin: "java"
         apply plugin: 'checkstyle'
+        apply plugin: 'jacoco'
 
         sourceCompatibility = JavaVersion.VERSION_15
         targetCompatibility = JavaVersion.VERSION_15
@@ -54,5 +56,41 @@ allprojects {
         test {
             useJUnitPlatform()
         }
+
+        jacoco {
+            toolVersion = '0.8.6'
+        }
+
+        def execFiles = project.fileTree(project.buildDir).include("/jacoco/*.exec")
+        def path = 'by/milosh'
+        def excludedTests = [
+                path + '/controller/**'
+        ]
+
+        jacocoTestReport.dependsOn test
+        jacocoTestReport {
+            afterEvaluate {
+                classDirectories.setFrom(files(classDirectories.files.collect {
+                    fileTree(dir: it, exclude:
+                            excludedTests
+                    )
+                }))
+            }
+        }
+
+        jacocoTestCoverageVerification.dependsOn jacocoTestReport
+
+        jacocoTestCoverageVerification {
+            violationRules {
+                rule {
+                    limit {
+                        counter = 'LINE'
+                        minimum = 0.5
+                    }
+                }
+            }
+        }
+
+        //check.dependsOn jacocoTestCoverageVerification
     }
 }
