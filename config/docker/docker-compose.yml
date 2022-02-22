@@ -1,17 +1,39 @@
 version: '3.9'
 
 volumes:
-  postgres-volume:
+  management-data:
+
+networks:
+  management-tier:
 
 services:
-  db:
-    image: postgres:12.9
-    container_name: management-container
+  postgres:
+    image: amilosh/management-postgres:12.9
+    container_name: postgres
+    hostname: postgres
+    restart: unless-stopped
     environment:
-      POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
       POSTGRES_DB: management-db
     ports:
       - 5432:5432
     volumes:
-      - postgres-volume:/var/lib/postgresql/data
+      - management-data:/var/lib/postgresql/data
+    networks:
+      - management-tier
+
+  management:
+    image: amilosh/management
+    container_name: management
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USER=postgres
+      - DB_PASS=postgres
+      - DB_NAME=management-db
+    ports:
+      - 8080:8080
+    restart: unless-stopped
+    networks:
+      - management-tier

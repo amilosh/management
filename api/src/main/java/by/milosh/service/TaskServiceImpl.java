@@ -1,7 +1,9 @@
 package by.milosh.service;
 
 import by.milosh.dto.Task;
+import org.springframework.stereotype.Service;
 
+@Service
 public class TaskServiceImpl implements TaskService {
 
     @Override

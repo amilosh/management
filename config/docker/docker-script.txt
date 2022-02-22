@@ -2,3 +2,14 @@ docker pull postgres:12.9
 docker run --name management-container -e POSTGRES_PASSWORD=postgres -e POSTGRES_USER=postgres -e POSTGRES_DB=management-db -d -p 5432:5432 -v postgres-volume:/var/lib/postgresql/data postgres:12.9
 
 docker-compose -f docker-compose.yml up -d
+
+# Push Images to Docker Hub. Pul and run Images via docker-compose
+## Push PostgreSQL
+docker images
+docker tag 84353f33e1de amilosh/management-postgres:12.9
+docker push amilosh/management-postgres:12.9
+## Push management
+gradle jib
+## Pull and run
+docker-compose -f docker-compose.yml pull
+docker-compose -f docker-compose.yml up -d
